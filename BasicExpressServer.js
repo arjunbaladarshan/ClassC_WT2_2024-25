@@ -2,16 +2,33 @@ const express = require('express');
 
 const app = express();
 
-const students = ['arjun','rajkot','gujarat','INDIA']
+const data = ["darsahn","rajkot"];
 
-app.get('/',(req,res)=>{
-    res.send(students);
+// getAll api
+app.get('/data',(req,res)=>{
+    res.send(data);
+});
+//getById api
+app.get('/data/:id',(req,res)=>{
+    res.send(data[req.params.id]);
+});
+//insert (create) api
+app.post("/data/add/:temp",(req,res)=>{
+    data.push(req.params.temp);
+    res.send(data);
+});
+//delete api
+app.delete("/data/:id",(req,res)=>{
+    data.splice(req.params.id,1);
+    res.send(data);
+});
+//edit (update) api
+app.patch("/data/edit/:id/:newdata",(req,res)=>{
+    data[req.params.id] = req.params.newdata;
+    res.send(data);
 });
 
-app.post('/',(req,res)=>{
-    res.send("Hello world home post")
-});
 
 app.listen(3000,()=>{
-    console.log("Server started at 3000")
-})
+    console.log("Server started @ 3000");
+});
